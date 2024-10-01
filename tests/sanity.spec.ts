@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import LoginPage from '../pages/LoginPage';
-import UserCredentials from '../helpers/UserCredentials';
 import ApplicationURL from '../helpers/ApplicationURL';
+import ProductsPage from '../pages/ProductsPage';
 
 
 test('sanity test', async ({ page }) => {
@@ -31,9 +31,11 @@ test('sanity test', async ({ page }) => {
 });
 
 
-test('demo test 2', async ({ page }) => {
+test('demo test_2', async ({ page }) => {
   
     const loginPage = new LoginPage(page);
     await loginPage.loginToApplication();
-
+    const productsPage = new ProductsPage(page);   
+    await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
+    await productsPage.validateTitle("Products");
 });
