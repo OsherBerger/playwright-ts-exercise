@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 import LoginPage from '../pages/LoginPage';
 import UserCredentials from '../helpers/UserCredentials';
+import ApplicationURL from '../helpers/ApplicationURL';
 
 
 test('sanity test', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
 
   const loginPage = new LoginPage(page);
-  await loginPage.loginToApplication(UserCredentials.PERFORMANCE_GLITCH_USER, UserCredentials.CORRECT_PASSWORD);
+  await loginPage.loginToApplication();
 
   await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
   await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
@@ -30,18 +30,10 @@ test('sanity test', async ({ page }) => {
 
 });
 
-test('demo test', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
-
-  const loginPage = new LoginPage(page);
-  await loginPage.loginToApplication(UserCredentials.LOCKED_OUT_USER, UserCredentials.CORRECT_PASSWORD);
-
-});
 
 test('demo test 2', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/');
   
     const loginPage = new LoginPage(page);
-    await loginPage.loginToApplication(UserCredentials.STANDARD_USER, UserCredentials.CORRECT_PASSWORD);
+    await loginPage.loginToApplication();
 
 });
