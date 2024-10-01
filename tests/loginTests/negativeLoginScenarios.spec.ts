@@ -1,6 +1,5 @@
 import test from "@playwright/test";
 import LoginPage from "../../pages/LoginPage";
-import UserCredentials from "../../helpers/UserCredentials";
 import { ErrorMessages } from "../../helpers/ErrorMessages";
 import ApplicationURL from "../../helpers/ApplicationURL";
 
@@ -13,7 +12,7 @@ test.describe("Negative Login Scenarios", () =>{
     })
 
     test("Login with locked_out_user",async({page}) => {
-        await loginPage.loginToApplication(UserCredentials.LOCKED_OUT_USER);
+        await loginPage.loginToApplication(process.env.LOCKED_OUT_USER);
         await loginPage.validateErrorMessage(ErrorMessages.LOGIN_WITH_LOCKED_USER);
         await loginPage.validatePageUrl(ApplicationURL.BASE_URL);
     })
@@ -26,7 +25,7 @@ test.describe("Negative Login Scenarios", () =>{
     })
     
     test("Login with incorrect password",async({page}) => {
-        await loginPage.loginToApplication(UserCredentials.STANDARD_USER, "blablabla");
+        await loginPage.loginToApplication(process.env.STANDARD_USER, "blablabla");
         await loginPage. validateErrorMessage(ErrorMessages.LOGIN_WITH_INCORRECT_CREDENTIALS);  
         await loginPage.validatePageUrl(ApplicationURL.BASE_URL);
     })
