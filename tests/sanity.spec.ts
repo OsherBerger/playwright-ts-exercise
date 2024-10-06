@@ -4,53 +4,57 @@ import ApplicationURL from '../helpers/ApplicationURL';
 import ProductsPage from '../pages/ProductsPage';
 import YourCartPage from '../pages/YourCartPage';
 import PageTitles from '../helpers/PageTitles';
+import CheckoutYourInformationPage from '../pages/CheckoutYourInformationPage';
+import CheckoutOverviewPage from '../pages/CheckoutOverviewPage';
+import CheckoutCompletePage from '../pages/CheckoutCompletePage';
 
+test.describe('Sanity Tests Block', () => {
 
-test('sanity test', async ({ page }) => {
+                      //products[0]             //products[1]           //products[2]
+    const products = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt']
 
-  const loginPage = new LoginPage(page);
-  const productsPage = new ProductsPage(page);
-  const yourCartPage = new YourCartPage(page);
-  await loginPage.loginToApplication();
+    test('Validating doing simple transaction', async ({ page }) => {
 
-  await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-  await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
+      const loginPage = new LoginPage(page);
+      const productsPage = new ProductsPage(page);
+      const yourCartPage = new YourCartPage(page);
+      const checkoutYourInfoPage = new CheckoutYourInformationPage(page);
+      const checkoutOverviewPage = new CheckoutOverviewPage(page);
+      const checkoutCompletePage = new CheckoutCompletePage(page);
+      await loginPage.loginToApplication();
+    
+      await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
+      await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
+      
+      await productsPage.chooseProductByTitle(products[0]);
+      await productsPage.chooseProductByTitle(products[1]);
+      await productsPage.chooseProductByTitle(products[2]);
+    
+      await productsPage.validateNumberOfItems(products.length.toString());
+      await productsPage.goToCart();
+    
+      await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
+      await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
+      await yourCartPage.validateNumberOfItems(products.length);
 
-  
-  await productsPage.chooseProductByTitle('Sauce Labs Backpack');
-  await productsPage.chooseProductByTitle('Sauce Labs Bike Light');
-  await productsPage.chooseProductByTitle('Sauce Labs Bolt T-Shirt');
+      await yourCartPage.validateItemExistsInCart(products[0]);
+      await yourCartPage.validateItemExistsInCart(products[1]);
+      await yourCartPage.validateItemExistsInCart(products[2]);
+      await yourCartPage.goToCheckout();
 
+      await checkoutYourInfoPage.validatePageUrl(ApplicationURL.CHECKOUT_YOUR_INFO_PAGE_URL); 
+      await checkoutYourInfoPage.validateTitle(PageTitles.CHECKOUT_YOUR_INFO_PAGE);
+      await checkoutYourInfoPage.fillInformation("Osher","Berger","123456");
+      await checkoutYourInfoPage.goToCheckoutOverview();
 
-  await productsPage.validateNumberOfItems("3");
-  await productsPage.goToCart();
+      await checkoutOverviewPage.validatePageUrl(ApplicationURL.CHECKOUT_OVERVIEW_PAGE_URL); 
+      await checkoutOverviewPage.validateTitle(PageTitles.CHECKOUT_OVERVIEW_PAGE);
+      await checkoutOverviewPage.clickFinishButton();
 
-  await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
-  await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
+      await checkoutCompletePage.validatePageUrl(ApplicationURL.CHECKOUT_COMPLETE_PAGE_URL); 
+      await checkoutCompletePage.validateTitle(PageTitles.CHECKOUT_COMPLETE_PAGE);
+      await checkoutCompletePage.validateFinalMessage('Thank you for your order!');
 
-  await page.locator('[data-test="checkout"]').click();
-  await page.locator('.checkout_info').click();
-  await page.locator('[data-test="firstName"]').click();
-  await page.locator('[data-test="firstName"]').fill('123');
-  await page.locator('[data-test="lastName"]').click();
-  await page.locator('[data-test="lastName"]').fill('123');
-  await page.locator('[data-test="postalCode"]').click();
-  await page.locator('[data-test="postalCode"]').fill('123');
-  await page.locator('[data-test="continue"]').click();
-  await page.locator('[data-test="finish"]').click();
-  await page.locator('[data-test="back-to-products"]').click();
-  await page.getByRole('button', { name: 'Open Menu' }).click();
-  await page.locator('[data-test="reset-sidebar-link"]').click();
-  await page.locator('[data-test="logout-sidebar-link"]').click();
+    });
+})
 
-});
-
-
-test('demo test_2', async ({ page }) => {
-  
-    const loginPage = new LoginPage(page);
-    await loginPage.loginToApplication();
-    const productsPage = new ProductsPage(page);   
-    await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-    await productsPage.validateTitle("Products");
-});

@@ -27,4 +27,11 @@ export abstract class BasePage {
         })
     }
 
+    protected async fillText(element: Locator, textToFill: string){
+        await test.step(`Filling the '${textToFill}' into the element`, async() => {
+            await element.fill(textToFill);
+        })
+    }
+
+
 }
