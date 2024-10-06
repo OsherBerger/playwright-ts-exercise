@@ -3,6 +3,7 @@ import LoginPage from '../pages/LoginPage';
 import ApplicationURL from '../helpers/ApplicationURL';
 import ProductsPage from '../pages/ProductsPage';
 import YourCartPage from '../pages/YourCartPage';
+import PageTitles from '../helpers/PageTitles';
 
 
 test('sanity test', async ({ page }) => {
@@ -13,7 +14,7 @@ test('sanity test', async ({ page }) => {
   await loginPage.loginToApplication();
 
   await productsPage.validatePageUrl(ApplicationURL.INVENTORY_PAGE_URL);
-  await productsPage.validateTitle("Products");
+  await productsPage.validateTitle(PageTitles.INVENTORY_PAGE);
 
   
   await productsPage.chooseProductByTitle('Sauce Labs Backpack');
@@ -25,7 +26,7 @@ test('sanity test', async ({ page }) => {
   await productsPage.goToCart();
 
   await yourCartPage.validatePageUrl(ApplicationURL.YOUR_CART_PAGE_URL);
-  await yourCartPage.validateTitle("Your Cart");
+  await yourCartPage.validateTitle(PageTitles.YOUR_CART_PAGE);
 
   await page.locator('[data-test="checkout"]').click();
   await page.locator('.checkout_info').click();
