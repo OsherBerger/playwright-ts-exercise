@@ -2,7 +2,6 @@ import { test, expect, Page, Locator } from "@playwright/test";
 
 export abstract class BasePage {
     constructor(protected page: Page) {
-
     }
 
     public async validatePageUrl(url: string) {

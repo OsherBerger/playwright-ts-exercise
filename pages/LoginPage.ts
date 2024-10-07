@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 import ApplicationURL from "../helpers/ApplicationURL";
 import { ErrorMessages } from "../helpers/ErrorMessages";
 import { BasePage } from "./BasePage";
