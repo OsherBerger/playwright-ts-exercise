@@ -5,6 +5,4 @@ export default class ApplicationURL{
     public static readonly CHECKOUT_YOUR_INFO_PAGE_URL = 'https://www.saucedemo.com/checkout-step-one.html';
     public static readonly CHECKOUT_OVERVIEW_PAGE_URL = 'https://www.saucedemo.com/checkout-step-two.html';
     public static readonly CHECKOUT_COMPLETE_PAGE_URL = 'https://www.saucedemo.com/checkout-complete.html';
-
-
 }

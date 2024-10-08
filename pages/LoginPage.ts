@@ -10,8 +10,6 @@ export default class LoginPage extends BasePage {
     private loginButton: Locator;
     private errorMessage: Locator;
     
-
-
     constructor(protected page:Page){
         super(page);
         this.usernameField = this.page.locator('[data-test="username"]');
