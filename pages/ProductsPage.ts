@@ -12,14 +12,6 @@ export default class ProductsPage extends BasePage{
         this.shoppingCartElement = this.page.locator('a[class="shopping_cart_link"]');
     }
 
-    // public async chooseProductByTitle(expectedProductTitle: string){
-    //     for(let product of await this.itemDescriptionElement.all()){
-    //         const productTitle = await product.locator('[class="inventory_item_name "]').innerText();  
-    //         if (productTitle === expectedProductTitle) {
-    //             await product.locator('button').click();
-    //         }         
-    //     }
-    // }
 
     public async chooseProductByTitle(expectedProductTitle: string){
         await this.itemDescriptionElement.filter({hasText: expectedProductTitle})
